@@ -1,19 +1,23 @@
 from tkinter import *
+import json
+
+file_name="gramaticas.txt"
+CFG={}
 
 #lee la gramatica-----------------------------------------------------------    
 def read_CFG():
-    CFG={}
     derivation=[]
     text = input_text.get("1.0",END)
     rules = text.split("\n")[:-1]
-    #print(rules)
+    print(rules)
     for line in rules:
         rule= line.split("->")
-        #print(rule)
+        print(rule)
         CFG[rule[0]]=rule[1]
 
     
     for rule in CFG:
+        print(rule)
         derivation=CFG[rule].split("|")
         for i in range(len(derivation)):
             derivation[i]=derivation[i].split(",")
@@ -21,6 +25,12 @@ def read_CFG():
         CFG[rule]=derivation
 
     print(CFG)
+    gramaticas = open(file_name,"a")
+    gramaticas.write(json.dumps(CFG))
+    gramaticas.write("\n")
+    gramaticas.close()
+
+
 #-----------------------------------------------------------------    
 
 #abre la ventana--------------------------------------------------------    
