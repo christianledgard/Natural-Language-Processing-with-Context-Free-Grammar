@@ -14,10 +14,9 @@
 using namespace std;
 
 
-class regla{
+struct regla{
     string izq;
     vector<string> der;
-public:
     regla(string izq, vector<string> der) : izq(std::move(izq)), der(std::move(der)) {}
     string preattyStringOutput();
 };
@@ -28,6 +27,9 @@ class gramatica{
 public:
     gramatica() {}
     void crearRegla(string izq, string der);
+
+    string queReglaDeriva(string x);
+
     void print();
 
     virtual ~gramatica();

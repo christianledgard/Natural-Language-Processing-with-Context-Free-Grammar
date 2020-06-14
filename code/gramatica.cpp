@@ -36,6 +36,16 @@ gramatica::~gramatica() {
         delete p;
 }
 
+string gramatica::queReglaDeriva(string x) {
+
+    string result;
+    for (const auto &i : gram)
+        for (const auto &j : i->der)
+            if (j == x)
+                result += i->izq;
+    return result;
+}
+
 string regla::preattyStringOutput() {
     string result;
     result += izq;
