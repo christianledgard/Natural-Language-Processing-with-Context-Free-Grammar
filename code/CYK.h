@@ -9,8 +9,6 @@
 #include <utility>
 #include <vector>
 #include <iostream>
-#include <ctype.h>
-
 
 #include "gramatica.h"
 
@@ -23,14 +21,18 @@ private:
     string cadena;
     char S;
 
-    string table[100][100];
+    string **matriz;
+    size_t arraySize;
 
-    string getString(char x){ string s(1, x); return s; }
-    vector<string> distributiva(string a, string b);
+    static string getString(char x){ string s(1, x); return s; }
+    static vector<string> distributiva(const string& a, const string& b);
 
 public:
-    CYK(gramatica *g,char S, string cadena) : G(g),S(S) {CYK::cadena = cadena;}
+    CYK(gramatica *g,char S, const string& cadena);
+
     bool solve();
+
+    virtual ~CYK();
 
 };
 

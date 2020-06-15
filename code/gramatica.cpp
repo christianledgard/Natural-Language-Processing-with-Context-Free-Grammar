@@ -4,9 +4,11 @@
 
 #include "gramatica.h"
 
-void gramatica::crearRegla(string izq, string der) {
+#include <utility>
+
+void gramatica::crearRegla(string izq, const string& der) {
     vector<string> vecDer;
-    string temp = "";
+    string temp;
 
     //SPLIT DER and STORE IN A VEC
 
@@ -21,7 +23,7 @@ void gramatica::crearRegla(string izq, string der) {
     vecDer.push_back(temp);
 
 
-    gram.push_back(new regla(izq, vecDer));
+    gram.push_back(new regla(std::move(izq), vecDer));
     vecDer.clear();
 }
 
@@ -36,7 +38,7 @@ gramatica::~gramatica() {
         delete p;
 }
 
-string gramatica::queReglaDeriva(string x) {
+string gramatica::queReglaDeriva(const string& x) {
 
     string result;
     for (const auto &i : gram)

@@ -25,10 +25,10 @@ class gramatica{
     vector<regla*> gram;
 
 public:
-    gramatica() {}
-    void crearRegla(string izq, string der);
+    gramatica() = default;
+    void crearRegla(string izq, const string& der);
 
-    string queReglaDeriva(string x);
+    string queReglaDeriva(const string& x);
 
     void print();
 
