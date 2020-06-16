@@ -24,15 +24,25 @@ int main() {
 
 
 
-    gramatica a;
-    a.crearRegla("S","RT");
-    a.crearRegla("R","TR|a");
-    a.crearRegla("T","TR|b");
-    a.print();
+//    gramatica a;
+//    a.crearRegla("S","RT");
+//    a.crearRegla("R","TR|a");
+//    a.crearRegla("T","TR|b");
+//    a.print();
+//
+//    CYK cyk2(&a,'S',"baba");
 
-    CYK cyk2(&a,'S',"baba");
-    cout << cyk2.solve();
 
+    gramatica clase;
+    clase.crearRegla("S","AB|BC");
+    clase.crearRegla("A","BA|a");
+    clase.crearRegla("B","CC|b");
+    clase.crearRegla("C","AB|a");
+    clase.print();
+
+    CYK cyk3(&clase,'S',"baaba");
+    cout << cyk3.solve();
+    cyk3.printSolution();
 
     return 0;
 

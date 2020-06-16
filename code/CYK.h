@@ -31,6 +31,7 @@ public:
     CYK(gramatica *g,char S, const string& cadena);
 
     bool solve();
+    void printSolution();
 
     virtual ~CYK();
 
