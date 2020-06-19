@@ -21,7 +21,8 @@ bool CYK::solve()
                     string respuesta;
 
                     for(const string& combinacion : posiblesCombinaciones)
-                        respuesta += G->queReglaDeriva(combinacion);
+                        if(respuesta.find(G->queReglaDeriva(combinacion)) == std::string::npos) //Insert only if is not in "respuesta"
+                            respuesta += G->queReglaDeriva(combinacion);
 
                     matriz[i][j] += respuesta;
                 }
@@ -58,9 +59,9 @@ CYK::~CYK() {
 }
 
 void CYK::printSolution() {
-    for (int i = 0; i < arraySize; ++i) {
-        for (int j = 0; j < arraySize; ++j) {
-            cout << matriz[i][j] << " ";
+    for (int i = 1; i < arraySize; ++i) {
+        for (int j = 1; j < arraySize; ++j) {
+            cout << setw(5)<< matriz[i][j] << setw(5)<< "|";
         }
         cout << endl;
     }
