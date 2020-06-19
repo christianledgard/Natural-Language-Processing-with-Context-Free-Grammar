@@ -1,8 +1,16 @@
 #include <iostream>
 #include "gramatica.h"
 #include "CYK.h"
+#include "Earley.cpp"
 
 int main() {
+	gramatica suma;
+	suma.crearRegla("S","1|1+S");
+
+	Earley sumas(&suma,"1+1");
+	cout<<sumas.reconocer()<<endl<<endl;
+
+    cout <<"|-----------------------------------------------------------------------|\n";
 
     gramatica g;
     g.crearRegla("S","AB");
@@ -17,11 +25,10 @@ int main() {
     CYK cyk(&g,'S',"aaabbbcc");
     cout << cyk.solve();
 
+    cout <<"|-----------------------------------------------------------------------|\n";
 
-
-    cout << endl << endl;
-
-
+	Earley gram1(&g,"aaabbbcc");
+	cout<<gram1.reconocer()<<endl<<endl;
 
 
 //    gramatica a;
@@ -33,6 +40,7 @@ int main() {
 //    CYK cyk2(&a,'S',"baba");
 
 
+    cout <<"|-----------------------------------------------------------------------|\n";
     gramatica clase;
     clase.crearRegla("S","AB|BC");
     clase.crearRegla("A","BA|a");
@@ -44,9 +52,10 @@ int main() {
     cout << cyk3.solve() << endl;
     cyk3.printSolution();
 
+    cout <<"|-----------------------------------------------------------------------|\n";
+	
+	Earley gram2(&clase,"baaba");
+	cout<<gram2.reconocer()<<endl<<endl;
+
     return 0;
-
-
-
-
 }

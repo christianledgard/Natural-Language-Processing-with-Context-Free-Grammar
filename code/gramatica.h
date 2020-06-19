@@ -27,6 +27,8 @@ class gramatica{
 public:
     gramatica() = default;
     void crearRegla(string izq, const string& der);
+	regla* inicio();
+	regla* get_regla(char);
 
     string queReglaDeriva(const string& x);
 

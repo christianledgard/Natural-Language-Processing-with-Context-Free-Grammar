@@ -60,3 +60,13 @@ string regla::preattyStringOutput() {
     }
     return result;
 }
+
+
+regla* gramatica::inicio(){return gram.size()>0?gram[0]:nullptr;}
+
+regla* gramatica::get_regla(char i){
+	for(auto r:gram)
+		if(i==(r->izq)[0]) return r;
+
+	return nullptr;
+}
