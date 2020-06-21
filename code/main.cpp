@@ -50,7 +50,7 @@ int main() {
     clase.print();
 
     CYK cyk3(&clase,'S',"baaba");
-    cout << cyk3.solve();
+    cout << cyk3.solve() << endl;
     cyk3.printSolution();
 
     cout <<"|-----------------------------------------------------------------------|\n";

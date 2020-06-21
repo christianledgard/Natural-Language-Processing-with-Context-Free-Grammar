@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 #include <iostream>
+#include <iomanip>
 
 #include "gramatica.h"
 
