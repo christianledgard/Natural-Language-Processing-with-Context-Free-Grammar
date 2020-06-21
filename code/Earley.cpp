@@ -84,7 +84,7 @@ bool Earley::reconocer(){
 }
 
 Earley::~Earley(){
-	for(auto vec:tabla)
-		for(auto est:vec)
-			delete est;
+	for(size_t i=0;i<tabla.size();i++)
+		for(size_t j=0;tabla[i].size();j++)
+			delete tabla[i][j];
 }
