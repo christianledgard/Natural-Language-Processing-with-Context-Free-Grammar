@@ -17,7 +17,7 @@ struct Estado{
 	string der;
 
 	char siguiente(){return der[punPos];}
-	bool esta_completo(){return punPos==der.size()?true:false;}
+	bool esta_completo(){return punPos==der.size();}
 
 	void mostrar(){
 		cout<<"origen "<<origen<<": ";
