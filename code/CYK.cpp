@@ -21,8 +21,7 @@ bool CYK::solve()
                     string respuesta;
 
                     for(const string& combinacion : posiblesCombinaciones)
-                        if(respuesta.find(G->queReglaDeriva(combinacion)) == std::string::npos) //Insert only if is not in "respuesta"
-                            respuesta += G->queReglaDeriva(combinacion);
+                        respuesta += G->queReglaDeriva(combinacion);
 
                     matriz[i][j] += respuesta;
                 }
