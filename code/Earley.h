@@ -2,12 +2,6 @@
 #define __Ealey_Parcer__
 
 #include "gramatica.h"
-//#include "unordered_map"
-
-//typedef std::unordered_map<size_t,Estado*> algo q no se usa;
-
-bool es_mayuscula(char letra){return (letra>='A' && letra<='Z');}
-
 
 struct Estado{
 	size_t punPos;//marca que parte de la regla ya a sido parceada
@@ -19,41 +13,14 @@ struct Estado{
 	char siguiente(){return der[punPos];}
 	bool esta_completo(){return punPos==der.size();}
 
-	void mostrar(){
-		cout<<"origen "<<origen<<": ";
-		cout<<izq<<" -> ";
-		for(size_t i=0;i<der.size();i++){
-			if(i==punPos) cout<<".";
-			cout<<der[i];
-		}
-		if(punPos==der.size()) cout<<".";
-		cout<<"\n";
+	void mostrar();
 
-	}
+	Estado(regla* _regla, size_t cual,size_t ppos,size_t ori);
 
-	Estado(regla* _regla, size_t cual,size_t ppos,size_t ori){
-		izq=_regla->izq;
-		der=_regla->der[cual];
-		punPos=ppos;
-		origen=ori;
-	}
+	Estado(Estado* otro_estado,size_t pos);
 
-	Estado(Estado* otro_estado,size_t pos){
-		izq=otro_estado->izq;
-		der=otro_estado->der;
-		punPos=(otro_estado->punPos)+1;
-		origen=pos;
-	}
-
-	bool es_igual_a(Estado* otro_estado){
-		if(izq.compare(otro_estado->izq)!=0)return false;
-		if(der.compare(otro_estado->der)!=0)return false;
-		if(origen!=otro_estado->origen)return false;
-		if(punPos!=otro_estado->punPos)return false;
-		return true;
-	}
+	bool es_igual_a(Estado* otro_estado);
 };
-
 
 class Earley{
 	vector<vector<Estado*> > tabla;
@@ -69,10 +36,10 @@ class Earley{
 
 public:
 	Earley(gramatica*,string);
-	virtual ~Earley();
-
 	bool reconocer();
+    virtual ~Earley();
 };
 
+bool es_mayuscula(char letra){return (letra>='A' && letra<='Z');}
 
 #endif

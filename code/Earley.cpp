@@ -5,7 +5,7 @@ Earley::Earley(gramatica* gram,string cadena):_gramatica_(gram),_cadena_(cadena)
 }
 
 void Earley::agregar_estado(regla* _regla,size_t cual,size_t punPos,size_t pos){
-	Estado* nuevo_estado=new Estado(_regla,cual,punPos,pos);
+	auto* nuevo_estado=new Estado(_regla,cual,punPos,pos);
 
 	for(size_t i=0;i<tabla[pos].size();i++)
 		if(tabla[pos][i]->es_igual_a(nuevo_estado)){
@@ -18,7 +18,7 @@ void Earley::agregar_estado(regla* _regla,size_t cual,size_t punPos,size_t pos){
 }
 
 void Earley::agregar_estado(Estado* est,size_t opos,size_t tpos){
-	Estado* nuevo_estado=new Estado(est,opos);
+	auto* nuevo_estado=new Estado(est,opos);
 
 	for(size_t i=0;i<tabla[tpos].size();i++)
 		if(tabla[tpos][i]->es_igual_a(nuevo_estado)){
@@ -87,4 +87,37 @@ Earley::~Earley(){
 	for(size_t i=0;i<tabla.size();i++)
 		for(size_t j=0;tabla[i].size();j++)
 			delete tabla[i][j];
+}
+
+void Estado::mostrar() {
+    cout<<"origen "<<origen<<": ";
+    cout<<izq<<" -> ";
+    for(size_t i=0;i<der.size();i++){
+        if(i==punPos) cout<<".";
+        cout<<der[i];
+    }
+    if(punPos==der.size()) cout<<".";
+    cout<<"\n";
+}
+
+Estado::Estado(regla *_regla, size_t cual, size_t ppos, size_t ori) {
+    izq=_regla->izq;
+    der=_regla->der[cual];
+    punPos=ppos;
+    origen=ori;
+}
+
+Estado::Estado(Estado *otro_estado, size_t pos) {
+    izq=otro_estado->izq;
+    der=otro_estado->der;
+    punPos=(otro_estado->punPos)+1;
+    origen=pos;
+}
+
+bool Estado::es_igual_a(Estado *otro_estado) {
+    if(izq!=otro_estado->izq)return false;
+    if(der!=otro_estado->der)return false;
+    if(origen!=otro_estado->origen)return false;
+    if(punPos!=otro_estado->punPos)return false;
+    return true;
 }

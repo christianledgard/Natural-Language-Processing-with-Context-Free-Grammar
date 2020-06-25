@@ -44,7 +44,7 @@ int main() {
     CYK cyk2(&a,'S',"baba");
 
 
-    
+
     cout <<"|-----------------------------------------------------------------------|\n";
     gramatica clase;
     clase.crearRegla("S","AB|BC");

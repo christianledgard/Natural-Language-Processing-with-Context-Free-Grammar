@@ -1,7 +1,3 @@
-//
-// Created by Christian Ledgard on 6/14/20.
-//
-
 #include "CYK.h"
 
 string ** CYK::solve()

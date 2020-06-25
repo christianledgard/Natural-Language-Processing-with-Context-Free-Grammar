@@ -1,7 +1,3 @@
-//
-// Created by Christian Ledgard on 6/14/20.
-//
-
 #ifndef C___CYK_H
 #define C___CYK_H
 
