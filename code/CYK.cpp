@@ -1,19 +1,19 @@
-//
-// Created by Christian Ledgard on 6/14/20.
-//
-
 #include "CYK.h"
 
-bool CYK::solve()
+string ** CYK::solve()
 {
     for (int i = 1; i < cadena.size()+1; ++i)
         matriz[i][i] = G->queReglaDeriva(getString(cadena[i - 1]));
 
     for (int l = 2; l <= cadena.size(); ++l)
+    {
         for (int i = 1; i <= cadena.size() - l + 1; ++i)
         {
+            string tempResultado;
             int j = i + l - 1;
-            for (int k = i; k <= j-1; ++k)
+            for (int k = i; k <= j-1; ++k){
+
+
                 if(!matriz[i][k].empty() && !matriz[k + 1][j].empty())
                 {
                     vector<string> posiblesCombinaciones = distributiva(matriz[i][k], matriz[k + 1][j]);
@@ -21,14 +21,18 @@ bool CYK::solve()
                     string respuesta;
 
                     for(const string& combinacion : posiblesCombinaciones)
-                        if(respuesta.find(G->queReglaDeriva(combinacion)) == std::string::npos) //Insert only if is not in "respuesta"
-                            respuesta += G->queReglaDeriva(combinacion);
+                        respuesta += G->queReglaDeriva(combinacion);
 
-                    matriz[i][j] += respuesta;
+                    tempResultado += respuesta;
                 }
+            }
+            matriz[i][j] = eliminarDuplicados(tempResultado);
         }
 
-    return (matriz[1][cadena.size()]).find(S) != std::string::npos;
+    }
+
+
+    return matriz;
 }
 
 
@@ -58,13 +62,23 @@ CYK::~CYK() {
     delete [] matriz;
 }
 
-void CYK::printSolution() {
-    for (int i = 1; i < arraySize; ++i) {
-        for (int j = 1; j < arraySize; ++j) {
-            cout << setw(5)<< matriz[i][j] << setw(5)<< "|";
+
+string CYK::eliminarDuplicados(string x) {
+	sort(x.begin(), x.end());
+    auto res = unique(x.begin(), x.end());
+    return string(x.begin(), res) ;
+}
+
+bool CYK::cadenaAceptada() {
+    return (matriz[1][cadena.size()]).find(S) != std::string::npos;
+}
+
+ostream &operator<<(ostream &out, const CYK &cyk) {
+    for (int i = 1; i < cyk.arraySize; ++i) {
+        for (int j = 1; j < cyk.arraySize; ++j) {
+            cout << setw(5)<< cyk.matriz[i][j] << setw(5)<< "|";
         }
         cout << endl;
     }
-
-
+    return out;
 }

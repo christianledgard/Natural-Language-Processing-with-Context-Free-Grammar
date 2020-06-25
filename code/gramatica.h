@@ -1,7 +1,3 @@
-//
-// Created by Christian Ledgard on 6/14/20.
-//
-
 #ifndef C___GRAMATICA_H
 #define C___GRAMATICA_H
 
@@ -36,9 +32,5 @@ public:
 
     virtual ~gramatica();
 };
-
-
-
-
 
 #endif //C___GRAMATICA_H

@@ -1,7 +1,3 @@
-//
-// Created by Christian Ledgard on 6/14/20.
-//
-
 #include "gramatica.h"
 
 #include <utility>
@@ -60,7 +56,6 @@ string regla::preattyStringOutput() {
     }
     return result;
 }
-
 
 regla* gramatica::inicio(){return gram.size()>0?gram[0]:nullptr;}
 
