@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <unordered_map>
 
 #include "gramatica.h"
 
@@ -27,12 +28,15 @@ private:
 
     static string getString(char x){ string s(1, x); return s; }
     static vector<string> distributiva(const string& a, const string& b);
+    string eliminarDuplicados(string x);
 
 public:
     CYK(gramatica *g,char S, const string& cadena);
 
-    bool solve();
-    void printSolution();
+    string **solve();
+    bool cadenaAceptada();
+    friend ostream & operator<< (ostream &out, const CYK &cyk);
+
 
     virtual ~CYK();
 
