@@ -10,7 +10,7 @@ int main() {
 
 	Earley sumas(&suma,"1+2+(3*4)");
 	cout<<sumas.reconocer()<<endl<<endl;
-
+/*
     cout <<"|-----------------------------------------------------------------------|\n";
 
     gramatica g;
@@ -57,6 +57,6 @@ int main() {
 	
 	Earley gram2(&clase,"baaba");
 	cout<<gram2.reconocer()<<endl<<endl;
-
+*/
     return 0;
 }
