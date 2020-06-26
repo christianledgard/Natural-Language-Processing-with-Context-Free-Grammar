@@ -116,9 +116,9 @@ Para la implementación de la estructura regla, la dividimos en 2 partes: Derech
 
 
 \subsection{Algoritmo CYK}
-El siguiente algorítmo, considerado 'bottom-up parsing', fue inventado por John Cocke, Daniel Younger y Tadao Kasami. Este, solo opera con gramáticas en la forma normal de Chomsky \cite{CYKAlgorithmWiki}. 
+El siguiente algoritmo, considerado 'bottom-up parsing', fue inventado por John Cocke, Daniel Younger y Tadao Kasami. Este solo opera con gramáticas en la forma normal de Chomsky \cite{CYKAlgorithmWiki}. 
 
-Utilizando la notación Big O, el peor caso del algorítmo CYK es  
+Utilizando la notación Big O, el peor caso del algoritmo CYK es  
  ${\displaystyle {\mathcal {O}}\left(n^{3}\cdot \left|G\right|\right)}$ donde ${\displaystyle n}$ es la longitud de la cadena y ${\displaystyle \left|G\right|}$ es el tamaño de la gramática \cite{HopcroftUllman}. Esta complejidad hace que sea uno de los algoritmos más eficientes de parseo en términos del peor caso.
 
 Cumpliendo con los estándares, utilizaremos programación dinámica para resolver el Algoritmo CYK. Conforme al pseudocódigo expuesto en la Figura \ref{fig:pCYK}, realizaremos la implementación en C++, orientada a objetos.
@@ -126,11 +126,11 @@ Cumpliendo con los estándares, utilizaremos programación dinámica para resolv
 \begin{figure}[h!]
     \centering
     \includegraphics[width=250px]{img/pCYK.png}
-    \caption{Pseudocódigo del algorítmo CYK}
+    \caption{Pseudocódigo del algoritmo CYK}
     \label{fig:pCYK}
 \end{figure} 
 
-Nosotros creamos un array llamado matriz para almacenar el resultado ya procesado. Asimismo, en el método 'solve', ejecutaremos el algoritmo. Dicho método retornará un doble puntero, al puntero del array donde estará guardado nuestro resultado dinámico con las solución. También, en el método 'cadenaAceptada()', retornamos TRUE si la cadena es aceptada por el algoritmo, de lo contrario, retornaremos FALSE.
+Nosotros creamos un array llamado matriz para almacenar el resultado ya procesado. Asimismo, en el método 'solve', ejecutaremos el algoritmo. Dicho método retornará un doble puntero, al puntero del array donde estará guardado nuestro resultado dinámico con la solución. También, en el método 'cadenaAceptada()', retornamos TRUE si la cadena es aceptada por el algoritmo, de lo contrario, retornaremos FALSE.
 
 \lstinputlisting[style=c-style]{codigo/CYK.h}
 %\lstinputlisting[style=c-style]{codigo/CYK.cpp}
@@ -139,13 +139,14 @@ Nosotros creamos un array llamado matriz para almacenar el resultado ya procesad
 
 
 \subsection{Algoritmo Earley Parser}
-A diferencia del algoritmo CYK el algoritmo de Earley es del tipo 'top-down' ya que este evalúa si la cadena pertenece a la gramática empezando por la regla inicial y derivándola hasta obtener la cadena en el caso que esta exista en la gramática.
+A diferencia del algoritmo CYK el algoritmo de Earley es del tipo 'top-down' ya que éste evalúa si la cadena pertenece a la gramática empezando por la regla inicial y derivándola hasta obtener la cadena en el caso que ésta exista en la gramática.
 \\\\
 Para los siguientes párrafos $\alpha$, $\beta$ y $\gamma$ representan cualquier cadena de variables y símbolos de la gramática. $X$ y $Y$ representan variables de la gramática.Y $a$ representa cualquier símbolo de la gramática.
 \\\\
-Para lograr esta derivación se introduce una notación llamada 'dot-notation' o notación-punto $X \rightarrow \alpha \cdot \beta$. Esta notación indica que parte de una regla de la gramática ya a sido reconocida (la parte a la izquiera del punto) y que variable o símbolo se espera a continuación (la parte a la derecha del punto).
+Para lograr esta derivación se introduce una notación llamada 'dot-notation' o notación-punto $X \rightarrow \alpha \cdot \beta$. Esta notación indica que parte de una regla de la gramática ya ha sido reconocida (la parte a la izquiera del punto) y qué variable o símbolo se espera a continuación (la parte a la derecha del punto).
 \\\\
-Dada una cadena de tamaño $n$ se construye un array de tamaño $n+1$ donde cada posición en el array a partir de la posición 1 corresponde a la un símbolo en la cadena correspondiendo la posición 0 al $\epsilon$ que precede a la cadena. Cada lugar en el array le corresponde a un conjunto de estados donde cada estado es una tupla que se construye a parir de una 'dot-notation' y la posición en el array donde esta se originó $(X \rightarrow \alpha \cdot \beta, i)$. Llamamos al conjunto de estados que se encuentran en la posición $k$ $E(k)$.
+Dada una cadena de tamaño $n$ se construye un array de tamaño $n+1$ donde cada posición en el array a partir de la posición 1 corresponde a un símbolo en la cadena correspondiendo la posición 0 al $\epsilon$ que precede a la cadena. Cada lugar en el array le corresponde a un conjunto de estados donde cada estado es una tupla que se construye a partir de una 'dot-notation' y la posición en el array donde 
+ésta se originó $(X \rightarrow \alpha \cdot \beta, i)$. Llamamos al conjunto de estados que se encuentran en la posición $k$ $E(k)$.
 \\\\
 
 Este algoritmo consiste en repetir tres operaciones basadas en estos estados: predecir, escanear y  completar.
