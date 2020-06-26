@@ -1,0 +1,170 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[shortlabels]{enumitem}
+\usepackage{setspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{listings}
+\usepackage{float, tikz,geometry,graphicx}
+\usepackage{tabularx, enumitem}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{beramono}
+\usepackage{natbib}
+\usepackage{longtable}
+\usepackage{multirow}
+
+\setcounter{tocdepth}{2} % Show sections
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{c-style}{
+    language=[GNU]C++,
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codepurple},
+    keywordstyle=\color{orange},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\author{Anthony Aguilar \and Christian Ledgard \and Alexander Baldeon}
+\title{Proyecto - Teoría de la Computación}
+
+% encabezados
+\lhead[]{CS2101- UTEC \\Teoría de la Computación}
+\chead[]{2020-1}
+\rhead[]{Prof. Juan Gutierrez Alva \\jgutierreza@utec.edu.pe}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% pie de pagina
+\rfoot[]{}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+
+\pagestyle{fancy}
+
+
+
+\begin{document}
+  \begin{titlepage}
+    \centering
+    {\bfseries\LARGE Universidad de Ingeniería y Tecnología\par}
+    \vspace{2cm}
+    {\scshape\Large Ciencia de la Computación\par}
+    \vspace{3cm}
+    {\scshape\Huge Natural Language Processing with Context Free Grammar\par}
+    \vspace{3cm}
+    {\itshape\Large Proyecto - Teoría de la Computación\par}
+    \vfill
+    {\Large Autores: \par}
+    {\Large Christian Ledgard Ferrero\par}
+    {\Large Anthony Aguilar\par}
+    {\Large Alexander Baldeon\par}
+    \vfill
+    {\Large Mayo 2020 \par}
+  \end{titlepage}
+  \thispagestyle{fancy}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+ \input{texto/intro}
+
+\section{Alcance}
+\input{texto/alcance}
+
+\section{Definición del Problema}
+\input{texto/definicion_del_problema}
+
+\section{Estado del Arte}
+\input{texto/estado_del_arte}
+
+\section{Propuestas}
+\input{texto/propuestas}
+\newpage
+
+\section{Implementación de Algoritmos}
+
+Para implementar los algoritmos CYK y Earley definimos primero que es una gramática.
+
+\subsection{Clase Gramática}
+Para la implementación de la estructura regla, la dividimos en 2 partes: Derecha e Izquierda. Ejemplo: izq -> der. La parte izquierda estará definida por un string y la derecha por un vector de strings. Asimismo, creamos la clase gramática que almacenará en un vector de punteros a reglas, todas las reglas a analizar.
+
+\lstinputlisting[style=c-style]{codigo/gramatica.h}
+%\lstinputlisting[style=c-style]{codigo/gramatica.cpp}
+
+\newpage
+
+
+\subsection{Algoritmo CYK}
+El siguiente algorítmo, considerado 'bottom-up parsing', fue inventado por John Cocke, Daniel Younger y Tadao Kasami. Este, solo opera con gramáticas en la forma normal de Chomsky \cite{CYKAlgorithmWiki}. 
+
+Utilizando la notación Big O, el peor caso del algorítmo CYK es  
+ ${\displaystyle {\mathcal {O}}\left(n^{3}\cdot \left|G\right|\right)}$ donde ${\displaystyle n}$ es la longitud de la cadena y ${\displaystyle \left|G\right|}$ es el tamaño de la gramática \cite{HopcroftUllman}. Esta complejidad hace que sea uno de los algoritmos más eficientes de parseo en términos del peor caso.
+
+Cumpliendo con los estándares, utilizaremos programación dinámica para resolver el Algoritmo CYK. Conforme al pseudocódigo expuesto en la Figura \ref{fig:pCYK}, realizaremos la implementación en C++, orientada a objetos.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=250px]{img/pCYK.png}
+    \caption{Pseudocódigo del algorítmo CYK}
+    \label{fig:pCYK}
+\end{figure} 
+
+Nosotros creamos un array llamado matriz para almacenar el resultado ya procesado. Asimismo, en el método 'solve', ejecutaremos el algoritmo. Dicho método retornará un doble puntero, al puntero del array donde estará guardado nuestro resultado dinámico con las solución. También, en el método 'cadenaAceptada()', retornamos TRUE si la cadena es aceptada por el algoritmo, de lo contrario, retornaremos FALSE.
+
+\lstinputlisting[style=c-style]{codigo/CYK.h}
+%\lstinputlisting[style=c-style]{codigo/CYK.cpp}
+
+\newpage
+
+
+\subsection{Algoritmo Earley Parser}
+A diferencia del algoritmo CYK el algoritmo de Earley es del tipo 'top-down' ya que este evalúa si la cadena pertenece a la gramática empezando por la regla inicial y derivándola hasta obtener la cadena en el caso que esta exista en la gramática.
+\\\\
+Para los siguientes párrafos $\alpha$, $\beta$ y $\gamma$ representan cualquier cadena de variables y símbolos de la gramática. $X$ y $Y$ representan variables de la gramática.Y $a$ representa cualquier símbolo de la gramática.
+\\\\
+Para lograr esta derivación se introduce una notación llamada 'dot-notation' o notación-punto $X \rightarrow \alpha \cdot \beta$. Esta notación indica que parte de una regla de la gramática ya a sido reconocida (la parte a la izquiera del punto) y que variable o símbolo se espera a continuación (la parte a la derecha del punto).
+\\\\
+Dada una cadena de tamaño $n$ se construye un array de tamaño $n+1$ donde cada posición en el array a partir de la posición 1 corresponde a la un símbolo en la cadena correspondiendo la posición 0 al $\epsilon$ que precede a la cadena. Cada lugar en el array le corresponde a un conjunto de estados donde cada estado es una tupla que se construye a parir de una 'dot-notation' y la posición en el array donde esta se originó $(X \rightarrow \alpha \cdot \beta, i)$. Llamamos al conjunto de estados que se encuentran en la posición $k$ $E(k)$.
+\\\\
+
+Este algoritmo consiste en repetir tres operaciones basadas en estos estados: predecir, escanear y  completar.
+
+\begin{itemize}
+    \item Predecir: para todos los estados en $E(k)$ de la forma $(X \rightarrow \alpha \cdot Y \beta,i)$, agregamos $(Y \rightarrow \cdot \gamma , k)$ a $E(k)$ para todas las producciones de la forma $Y \rightarrow \gamma$ en la gramática.
+    \item Escanear: si $a$ es el siguiente símbolo a leer entonces para todos los estados en $E(k)$ de la forma $(X \rightarrow \alpha \cdot a \beta,i)$, agregamos $(X \rightarrow \alpha a \cdot \beta,i)$ a $E(k+1)$.
+    \item Completar:  para todos los estados en $E(k)$ de la forma $(Y \rightarrow \gamma \cdot, i)$, buscamos todos los estados en $E(i)$ de la forma $(X \rightarrow \alpha \cdot Y \beta,j)$ y agregamos $(X \rightarrow \alpha Y \cdot \beta,j)$ a $E(k)$.
+\end{itemize}
+
+Notese que el tamaño de $E(k)$ puede aumentar de tamaño después de cada operación así que se tiene que realizar las respectivas operaciones a los nuevos estados generados por operaciones previas.
+
+\lstinputlisting[style=c-style]{codigo/Earley.h}
+%\lstinputlisting[style=c-style]{codigo/Earley.cpp}
+
+
+\newpage
+
+\bibliography{bibliografia}  
+\bibliographystyle{ieeetr}
+
+\end{document}

@@ -1,0 +1,30 @@
+El inicio del procesamiento de lenguaje natural suele remontarse a 1950 cuando Alan Turing publico el articulo 'Computing Machinery and Intelligence' donde propone lo que conocemos como el test de Turing, un criterio de inteligencia.
+\\
+Una de las primera aplicación del NLP ocurrió en 1954 e involucro la traducción de 60 oraciones rusas al ingles.
+\\
+En los 1960´s ELIZA y SHRDLU fueron sistemas capaces de comunicarce con  humanos.
+\\
+Existen al menos 4 algoritmos de parsing
+\begin{enumerate}
+    \item El algoritmo CYK (Cocke–Younger–Kasami)
+    \begin{enumerate}
+        \item Solo trabaja con CFG en la forma normal de chumsky
+        \item El peor de los casos es $O(n^3 . |G|)$ time. Donde $n$ es el tamaño de la cadena y $|G|$ es el tamaño de la gramática $G$ lo que lo hace uno de los mas eficientes en el peor de los casos.
+    \end{enumerate}
+    \item Earley parser
+    \begin{enumerate}
+        \item Trabaja con todos las gramáticas libres del contexto.
+        \item Tiene un tiempo de ejecución $O(n^3)$ en el caso promedio,$O(n^2)$ en gramáticas no ambiguas y $O(n)$ para CFG deterministas.
+    \end{enumerate}
+    \item LR parser (Left-to-right, Rightmost derivation in reverse)\\
+    Son tipos de bottom-up parsers que analizan DCFG en tiempo liniar.
+    \begin{enumerate}
+        \item LALR parser
+        \item Canonical LR parser
+        \item Minimal LR parser 
+        \item GLR parser
+    \end{enumerate}
+    
+    \item LL parser (Left-to-right, Leftmost derivation)\\
+    Es un top-down parser para un subset de CFG
+\end{enumerate}
