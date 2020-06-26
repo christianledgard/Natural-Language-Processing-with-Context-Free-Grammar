@@ -4,13 +4,13 @@
 #include "Earley.cpp"
 
 int main() {
-	gramatica suma;
-	suma.crearRegla("S","N+S|N*S|(S)|N");
-	suma.crearRegla("N","1|2|3|4|5|6|7|8|9");
-
-	Earley sumas(&suma,"1+2+(3*4)");
-	cout<<sumas.reconocer()<<endl<<endl;
-    cout <<"|-----------------------------------------------------------------------|\n";
+//	gramatica suma;
+//	suma.crearRegla("S","N+S|N*S|(S)|N");
+//	suma.crearRegla("N","1|2|3|4|5|6|7|8|9");
+//
+//	Earley sumas(&suma,"1+2+(3*4)");
+//	cout<<sumas.reconocer()<<endl<<endl;
+//    cout <<"|-----------------------------------------------------------------------|\n";
 
     gramatica g;
     g.crearRegla("S","AB");
