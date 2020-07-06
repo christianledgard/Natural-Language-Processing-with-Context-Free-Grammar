@@ -9,9 +9,11 @@ void Earley::agregar_estado(regla* _regla,size_t cual,size_t punPos,size_t pos){
 
 	for(size_t i=0;i<tabla[pos].size();i++)
 		if(tabla[pos][i]->es_igual_a(nuevo_estado)){
+            cout<<"repetido\n|--|\n";
 			delete nuevo_estado;
 			return;
 		}
+    cout<<"unico\n|--|\n";
 
 	tabla[pos].push_back(nuevo_estado);
 	tabla[pos][tabla[pos].size()-1]->mostrar();
@@ -22,9 +24,11 @@ void Earley::agregar_estado(Estado* est,size_t opos,size_t tpos){
 
 	for(size_t i=0;i<tabla[tpos].size();i++)
 		if(tabla[tpos][i]->es_igual_a(nuevo_estado)){
+            cout<<"repetido\n|--|\n";
 			delete nuevo_estado;
 			return;
 		}
+    cout<<"unico\n|--|\n";
 
 	tabla[tpos].push_back(nuevo_estado);
 	tabla[tpos][tabla[tpos].size()-1]->mostrar();
@@ -38,13 +42,14 @@ void Earley::predecir(Estado* est,size_t k){//para variables
 }
 
 void Earley::escanear(Estado* est,size_t k){//para literales
-	if(est->siguiente()==_cadena_[k])
-		agregar_estado(est,est->origen,k+1);
+    for(size_t i=0;i<est->siguiente().size();i++)
+	    if(est->siguiente()[i]!=_cadena_[k+i])return;
+    agregar_estado(est,est->origen,k+1);
 }
 
 void Earley::completar(Estado* est,size_t k){//para estados ya parceados
 	for(size_t i=0;i<tabla[est->origen].size();i++)
-		if(tabla[est->origen][i]->siguiente()==est->izq[0])
+		if(tabla[est->origen][i]->siguiente()==est->izq)
 			agregar_estado(tabla[est->origen][i],tabla[est->origen][i]->origen,k);
 }
 
@@ -58,14 +63,17 @@ bool Earley::reconocer(){
 		cout<<"caracter: \""<<_cadena_[k]<<"\"\n";
 		for(size_t i=0;i<tabla[k].size();i++){//se puede expandir
 			if(tabla[k][i]->esta_completo()){//ya fue parceado
+                cout<<"completar\n";
 				completar(tabla[k][i],k);
 //				cout<<"completado\n\n";
 				}
-			else if(es_mayuscula(tabla[k][i]->siguiente())){//el siguiente termino es una variable
+			else if(es_variable(tabla[k][i]->siguiente())){//el siguiente termino es una variable
+                cout<<"predecir\n";
 				predecir(tabla[k][i],k);
 //				cout<<"predicho\n\n";
 				}
 			else{
+                cout<<"escanear\n";
 				escanear(tabla[k][i],k);//el siguiente termino es un literal
 //				cout<<"escaneado\n\n";
 				}
@@ -102,22 +110,46 @@ void Estado::mostrar() {
 
 Estado::Estado(regla *_regla, size_t cual, size_t ppos, size_t ori) {
     izq=_regla->izq;
+    cout<<izq<<"\n";
     der=_regla->der[cual];
+    for(auto &i:der)cout<<i;
+    cout<<"\n";
     punPos=ppos;
+    cout<<punPos<<"\n";
     origen=ori;
+    cout<<origen<<"\n";
+    cout<<"|--|\n";
 }
 
 Estado::Estado(Estado *otro_estado, size_t pos) {
     izq=otro_estado->izq;
+    cout<<izq<<"\n";
     der=otro_estado->der;
+    for(auto &i:der)cout<<i;
+    cout<<"\n";
     punPos=(otro_estado->punPos)+1;
+    cout<<punPos<<"\n";
     origen=pos;
+    cout<<origen<<"\n";
+    cout<<"|--|\n";
 }
 
 bool Estado::es_igual_a(Estado *otro_estado) {
-    if(izq.compare(otro_estado->izq)!=0)return false;
-    if(der.compare(otro_estado->der)!=0)return false;
+    if(!izq.compare(otro_estado->izq))return false;
+    if(der.size()!=otro_estado->der.size())return false;
+
+    for(size_t i=0;i<der.size();i++)
+        if(!der[i].compare(otro_estado->der[i]))return false;
+    
     if(origen!=otro_estado->origen)return false;
     if(punPos!=otro_estado->punPos)return false;
+
     return true;
+}
+
+bool Earley::es_variable(string var){
+    for(auto regla:_gramatica_->get_gramatica())
+        if(regla->izq == var) return true;
+
+    return false;
 }

@@ -1,16 +1,10 @@
 #ifndef C___CYK_H
 #define C___CYK_H
 
-#include <string>
-#include <utility>
-#include <vector>
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
 
+#include "lib.h"
 #include "gramatica.h"
 
-using namespace std;
 
 
 class CYK{

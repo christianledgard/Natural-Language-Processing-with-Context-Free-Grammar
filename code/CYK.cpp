@@ -58,8 +58,10 @@ CYK::CYK(gramatica *g, char S, const string& cadena) : G(g),S(S),cadena(cadena) 
 CYK::~CYK() {
     for(int i = 0; i < arraySize; ++i) {
         delete [] matriz[i];
+        matriz[i]=nullptr;
     }
     delete [] matriz;
+    matriz=nullptr;
 }
 
 

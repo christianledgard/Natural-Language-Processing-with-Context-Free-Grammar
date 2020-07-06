@@ -1,6 +1,7 @@
 #ifndef __Ealey_Parcer__
 #define __Ealey_Parcer__
 
+#include "lib.h"
 #include "gramatica.h"
 
 struct Estado{
@@ -8,9 +9,9 @@ struct Estado{
 	size_t origen;//en que etapa del algoritmo fue creado
 
 	string izq;
-	string der;
+	vector<string> der;
 
-	char siguiente(){return der[punPos];}
+	string siguiente(){return der[punPos];}
 	bool esta_completo(){return punPos==der.size();}
 
 	void mostrar();
@@ -34,12 +35,14 @@ class Earley{
 	void escanear(Estado*,size_t);
 	void completar(Estado*,size_t);
 
+    bool es_variable(string var);
+
 public:
 	Earley(gramatica*,string);
 	bool reconocer();
     virtual ~Earley();
 };
 
-bool es_mayuscula(char letra){return (letra>='A' && letra<='Z');}
+//bool es_mayuscula(char letra){return (letra>='A' && letra<='Z');}
 
 #endif
