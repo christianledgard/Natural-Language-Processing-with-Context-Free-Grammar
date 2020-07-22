@@ -24,8 +24,7 @@
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
-\lstdefinestyle{c-style}{
-    language=[GNU]C++,
+\lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codepurple},
     keywordstyle=\color{orange},
@@ -76,14 +75,15 @@
     \vfill
     {\Large Autores: \par}
     {\Large Christian Ledgard Ferrero\par}
-    {\Large Anthony Aguilar\par}
-    {\Large Alexander Baldeon\par}
+    {\Large Anthony Aguilar Sanchez\par}
+    
     \vfill
-    {\Large Mayo 2020 \par}
+    {\Large Junio 2020 \par}
   \end{titlepage}
   \thispagestyle{fancy}
 
 \tableofcontents
+
 \newpage
 
 \section{Introducción}
@@ -104,14 +104,15 @@
 
 \section{Implementación de Algoritmos}
 
+
+
 Para implementar los algoritmos CYK y Earley definimos primero que es una gramática.
 
 \subsection{Clase Gramática}
 Para la implementación de la estructura regla, la dividimos en 2 partes: Derecha e Izquierda. Ejemplo: izq -> der. La parte izquierda estará definida por un string y la derecha por un vector de strings. Asimismo, creamos la clase gramática que almacenará en un vector de punteros a reglas, todas las reglas a analizar.
 
-\lstinputlisting[style=c-style]{codigo/gramatica.h}
+\lstinputlisting[style=mystyle, language=C++]{codigo/gramatica.h}
 %\lstinputlisting[style=c-style]{codigo/gramatica.cpp}
-
 \newpage
 
 
@@ -132,7 +133,7 @@ Cumpliendo con los estándares, utilizaremos programación dinámica para resolv
 
 Nosotros creamos un array llamado matriz para almacenar el resultado ya procesado. Asimismo, en el método 'solve', ejecutaremos el algoritmo. Dicho método retornará un doble puntero, al puntero del array donde estará guardado nuestro resultado dinámico con la solución. También, en el método 'cadenaAceptada()', retornamos TRUE si la cadena es aceptada por el algoritmo, de lo contrario, retornaremos FALSE.
 
-\lstinputlisting[style=c-style]{codigo/CYK.h}
+\lstinputlisting[style=mystyle, language=C++]{codigo/CYK.h}
 %\lstinputlisting[style=c-style]{codigo/CYK.cpp}
 
 \newpage
@@ -159,9 +160,25 @@ Este algoritmo consiste en repetir tres operaciones basadas en estos estados: pr
 
 Notese que el tamaño de $E(k)$ puede aumentar de tamaño después de cada operación así que se tiene que realizar las respectivas operaciones a los nuevos estados generados por operaciones previas.
 
-\lstinputlisting[style=c-style]{codigo/Earley.h}
+\lstinputlisting[style=mystyle, language=C++]{codigo/Earley.h}
 %\lstinputlisting[style=c-style]{codigo/Earley.cpp}
 
+
+
+\section{Hoy en la Industria: Análisis Experimental}
+ \input{texto/analisis_experimental}
+ \subsection{Decision List}
+ \input{texto/decision_list}
+
+\section{Alternativas: Inteligencia Artificial}
+ \input{texto/ai}
+
+\section{GitHub}
+Nuestro proyecto se encuentra almacenado en el repositorio GitHub. Para acceder, podrá hacer 
+    \textbf{
+        \href{https://github.com/christianledgard/Natural-Language-Processing-with-Context-Free-Grammar/}{click aquí} 
+    }
+.
 
 \newpage
 
